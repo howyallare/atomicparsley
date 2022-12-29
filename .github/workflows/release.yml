@@ -19,7 +19,7 @@ jobs:
     steps:
     - uses: actions/checkout@v3
     - name: configure
-      run: cmake .
+      run: cmake . -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
     - name: build
       run: cmake --build . --config Release
     - name: build-musl
@@ -51,7 +51,7 @@ jobs:
       if: runner.os == 'Windows'
       run: |
         rm CMakeCache.txt
-        cmake -S . -B build-windows-x86 -A Win32
+        cmake -S . -B build-windows-x86 -A Win32 -DCMAKE_POLICY_DEFAULT_CMP0091=NEW -DCMAKE_MSVC_RUNTIME_LIBRARY=MultiThreaded
         cmake --build build-windows-x86 --config Release
         pushd build-windows-x86/Release
         7z a -tzip ../../AtomicParsleyWindowsX86.zip AtomicParsley.exe
